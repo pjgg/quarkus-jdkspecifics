@@ -1,4 +1,4 @@
-# Quarkus JDK17 Test Suite
+# Quarkus Jdk specifics Test Suite
 
 The goal of this TS is to cover the most interesting [JEPs](http://openjdk.java.net/jeps/1)  implemented since JDK 11
 
@@ -23,6 +23,7 @@ These are the selected ones:
 * JDK17 [2021-09-14] [features list](https://openjdk.java.net/projects/jdk/17/)
 
 ## Scenarios
-### Jaxs-panache
+### Jaxrs-panache
 * [Records](https://openjdk.java.net/jeps/395)
 * [Text Blocks](https://openjdk.java.net/jeps/378)
+* [Sealed Interfaces](https://openjdk.java.net/jeps/409)

@@ -17,9 +17,10 @@ import io.quarkus.test.scenarios.QuarkusScenario;
 import io.quarkus.test.services.DevModeQuarkusApplication;
 import io.quarkus.ts.jdk17.model.Fruit;
 import io.restassured.response.ValidatableResponse;
+import io.vertx.core.json.JsonObject;
 
 @QuarkusScenario
-public class FruitsResourceIT {
+public class DevModeFruitsResourceIT {
 
     @DevModeQuarkusApplication
     static final RestService app = new RestService();
@@ -88,7 +89,7 @@ public class FruitsResourceIT {
 
     private Fruit createFruit(Fruit fruit) {
         return given()
-                .body(fruit.toJsonEncoded())
+                .body(JsonObject.mapFrom(fruit).encode())
                 .header("Content-Type", MediaType.APPLICATION_JSON)
                 .when()
                 .post("/fruits")
@@ -106,7 +107,7 @@ public class FruitsResourceIT {
 
     private Fruit updateFruit(Fruit fruit) {
         return given()
-                .body(fruit.toJsonEncoded())
+                .body(JsonObject.mapFrom(fruit).encode())
                 .header("Content-Type", MediaType.APPLICATION_JSON)
                 .when()
                 .put("/fruits/" + fruit.id())

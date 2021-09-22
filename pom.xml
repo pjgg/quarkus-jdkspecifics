@@ -5,7 +5,7 @@
     <artifactId>parent</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name>Quarkus JDK17 TS: Parent</name>
+    <name>Quarkus JDK Specifics TS: Parent</name>
     <properties>
         <maven.compiler.parameters>true</maven.compiler.parameters>
         <maven.compiler.release>17</maven.compiler.release>
@@ -104,7 +104,10 @@
                 <artifactId>quarkus-maven-plugin</artifactId>
                 <version>${quarkus-plugin.version}</version>
                 <configuration>
-                    <compilerArgs>--enable-preview</compilerArgs>
+                    <compilerArgs>
+                        <arg>--enable-preview</arg>
+                    </compilerArgs>
+                    <jvmArgs>--enable-preview</jvmArgs>
                     <source>${maven.compiler.release}</source>
                     <target>${maven.compiler.release}</target>
                 </configuration>
@@ -166,6 +169,7 @@
                 </executions>
                 <configuration>
                     <trimStackTrace>false</trimStackTrace>
+                    <argLine>--enable-preview</argLine>
                 </configuration>
             </plugin>
             <plugin>
@@ -190,25 +194,6 @@
                     <configFile>eclipse-format.xml</configFile>
                     <lineEnding>LF</lineEnding>
                 </configuration>
-            </plugin>
-            <plugin>
-                <groupId>net.revelc.code</groupId>
-                <artifactId>impsort-maven-plugin</artifactId>
-                <version>${impsort-maven-plugin.version}</version>
-                <configuration>
-                    <!-- store outside of target to speed up formatting when mvn clean is used -->
-                    <cachedir>.cache</cachedir>
-                    <groups>java.,javax.,org.,com.,io.</groups>
-                    <staticGroups>*</staticGroups>
-                    <removeUnused>true</removeUnused>
-                </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>${src.sort.goal}</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
             <plugin>
                 <groupId>au.com.acegi</groupId>
@@ -266,9 +251,6 @@
             </plugin>
         </plugins>
     </build>
-    <modules>
-        <module>jaxrs-panache</module>
-    </modules>
     <repositories>
         <repository>
             <id>confluent</id>
@@ -279,6 +261,15 @@
         </repository>
     </repositories>
     <profiles>
+        <profile>
+            <id>JDK17</id>
+            <activation>
+                <jdk>17</jdk>
+            </activation>
+            <modules>
+                <module>jdk17/jaxrs-panache</module>
+            </modules>
+        </profile>
         <profile>
             <id>native</id>
             <activation>
